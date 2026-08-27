@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | ChoiceShoppingStore.online</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background-color: var(--c-ivory); }
+    .checkout-header {
+      background-color: var(--c-white);
+      padding: var(--spacing-lg) 0;
+      border-bottom: 1px solid var(--c-sand);
+      text-align: center;
+    }
+    .checkout-layout {
+      display: flex;
+      gap: var(--spacing-4xl);
+      align-items: flex-start;
+    }
+    .checkout-form-container {
+      flex: 2;
+    }
+    .checkout-summary {
+      flex: 1.5;
+      background-color: var(--c-white);
+      padding: var(--spacing-2xl);
+      position: sticky;
+      top: 24px;
+      border-radius: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+    .checkout-section {
+      background-color: var(--c-white);
+      padding: var(--spacing-2xl);
+      border-radius: 4px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--spacing-2xl);
+    }
+    .checkout-section-title {
+      font-size: 24px;
+      font-weight: 400;
+      font-family: var(--font-display);
+      margin-bottom: var(--spacing-xl);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--c-sand);
+    }
+    .form-row {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+    }
+    .form-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--c-midnight);
+    }
+    .form-input {
+      padding: 12px;
+      border: 1px solid var(--c-sand);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      background: var(--c-ivory);
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--c-midnight);
+      background: var(--c-white);
+    }
+    .form-error {
+      color: var(--c-terracotta);
+      font-size: 0.75rem;
+      margin-top: 4px;
+      display: none;
+    }
+    .has-error .form-input { border-color: var(--c-terracotta); }
+    .has-error .form-error { display: block; }
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .payment-option {
+      border: 1px solid var(--c-sand);
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+    }
+    .payment-option.active {
+      border-color: var(--c-midnight);
+      background-color: var(--c-ivory);
+    }
+    .payment-details {
+      padding: var(--spacing-md) var(--spacing-xl);
+      background-color: var(--c-ivory);
+      border: 1px solid var(--c-sand);
+      border-top: none;
+      display: none;
+    }
+    .payment-details.active { display: block; }
+    .summary-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .summary-item-img {
+      width: 64px;
+      height: 80px;
+      object-fit: cover;
+      background: var(--c-ivory);
+    }
+    .summary-item-info { flex: 1; }
+    .summary-item-title { font-weight: 600; font-size: 0.95rem; }
+    .summary-item-meta { font-size: 0.8rem; color: var(--c-slate); }
+    .summary-item-price { font-weight: 600; }
+    .order-confirmation {
+      display: none;
+      text-align: center;
+      padding: var(--spacing-4xl) 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .checkout-layout { flex-direction: column-reverse; }
+      .checkout-summary { width: 100%; position: static; }
+      .form-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="checkout-header">
+    <div class="container d-flex justify-between align-center">
+      <a href="index.html" class="nav-logo">ChoiceShoppingStore</a>
+      <a href="cart.html" style="font-weight: 500; font-size: 0.9rem; text-decoration: underline;">Return to Cart</a>
+    </div>
+  </header>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <nav class="mobile-nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop All</a>
+      <a href="categories.html">Categories</a>
+      <a href="new-arrivals.html">New Arrivals</a>
+      <a href="deals.html">Deals</a>
+      <a href="shop.html?search=Bestseller">Bestsellers</a>
+      <a href="cart.html?tab=wishlist">Wishlist</a>
+      <a href="cart.html">Cart</a>
+      <div style="margin-top: 16px; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--c-slate); font-weight: 600;">Shop By Category</div>
+      <a href="shop.html?category=Clothing" style="font-size: 16px; border-bottom: none; padding-bottom: 0;">Clothing</a>
+      <a href="shop.html?category=Footwear" style="font-size: 16px; border-bottom: none; padding-bottom: 0;">Footwear</a>
+      <a href="shop.html?category=Bags" style="font-size: 16px; border-bottom: none; padding-bottom: 0;">Bags</a>
+      <a href="shop.html?category=Accessories" style="font-size: 16px; border-bottom: none; padding-bottom: 0;">Accessories</a>
+    </nav>
+  </div>
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-header">
+      <button id="closeSearch" aria-label="Close Search">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="search-body container">
+      <form class="search-form" id="globalSearchForm">
+        <input type="text" class="search-input" id="globalSearchInput" placeholder="Search for products..." autocomplete="off">
+        <button type="submit" class="search-submit" aria-label="Submit Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+  <main class="section container" id="checkoutMain">
+    <div class="checkout-layout">
+      <div class="checkout-form-container">
+        <form id="checkoutForm" novalidate>
+          <div class="checkout-section">
+            <h2 class="checkout-section-title">01. Contact Information</h2>
+            <div class="form-row">
+              <div class="form-group" id="groupEmail">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" id="cEmail" required>
+                <span class="form-error">Please enter a valid email address.</span>
+              </div>
+              <div class="form-group" id="groupPhone">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" id="cPhone" required>
+                <span class="form-error">Please enter a valid phone number.</span>
+              </div>
+            </div>
+          </div>
+          <div class="checkout-section">
+            <h2 class="checkout-section-title">02. Shipping Address</h2>
+            <div class="form-row">
+              <div class="form-group" id="groupName">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" id="cName" required>
+                <span class="form-error">Please enter your full name.</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" id="groupAddress">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-input" id="cAddress" required>
+                <span class="form-error">Please enter your address.</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" id="groupCity">
+                <label class="form-label">City</label>
+                <input type="text" class="form-input" id="cCity" required>
+                <span class="form-error">Please enter your city.</span>
+              </div>
+              <div class="form-group" id="groupState">
+                <label class="form-label">State</label>
+                <input type="text" class="form-input" id="cState" required>
+                <span class="form-error">Please enter your state.</span>
+              </div>
+              <div class="form-group" id="groupZip">
+                <label class="form-label">PIN / ZIP Code</label>
+                <input type="text" class="form-input" id="cZip" required>
+                <span class="form-error">Please enter your postal code.</span>
+              </div>
+            </div>
+          </div>
+          <div class="checkout-section">
+            <h2 class="checkout-section-title">03. Payment Method</h2>
+            <div class="payment-methods">
+              <label class="payment-option active" data-target="detailsCard">
+                <input type="radio" name="payment" value="card" checked> Credit / Debit Card
+              </label>
+              <div class="payment-details active" id="detailsCard">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Card Number</label>
+                    <input type="text" class="form-input" placeholder="0000 0000 0000 0000">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Name on Card</label>
+                    <input type="text" class="form-input" placeholder="John Doe">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Expiry</label>
+                    <input type="text" class="form-input" placeholder="MM/YY">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">CVV</label>
+                    <input type="text" class="form-input" placeholder="123">
+                  </div>
+                </div>
+              </div>
+              <label class="payment-option" data-target="detailsUPI">
+                <input type="radio" name="payment" value="upi"> UPI (PhonePe, Paytm, BHIM)
+              </label>
+              <div class="payment-details" id="detailsUPI">
+                <div class="form-group">
+                  <label class="form-label">UPI ID</label>
+                  <input type="text" class="form-input" placeholder="username@upi">
+                </div>
+              </div>
+              <label class="payment-option" data-target="detailsCOD">
+                <input type="radio" name="payment" value="cod"> Cash on Delivery
+              </label>
+              <div class="payment-details" id="detailsCOD">
+                <p style="font-size: 0.9rem; color: var(--c-slate);">Pay with cash when your order is delivered. A verification SMS will be sent.</p>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" style="font-size: 1.1rem; padding: 16px;">Place Order</button>
+        </form>
+      </div>
+      <div class="checkout-summary">
+        <h2 style="font-family: var(--font-display); font-size: 24px; font-weight: 400; margin-bottom: 24px;">Order Summary</h2>
+        <div id="checkoutItems" style="border-bottom: 1px solid var(--c-sand); margin-bottom: 24px; padding-bottom: 8px;">
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem;">
+          <span>Subtotal</span><span id="cSubtotal">₹0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem;">
+          <span>Shipping</span><span id="cShipping">₹0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--c-sand); font-weight: 700; font-size: 1.25rem;">
+          <span>Total</span><span id="cTotal">₹0</span>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="order-confirmation" id="orderConfirmation">
+    <svg style="color: #22c55e; width: 80px; height: 80px; margin-bottom: 24px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <h1 style="font-size: 48px; font-family: var(--font-display); font-weight: 400; margin-bottom: 16px;">Order Confirmed!</h1>
+    <p style="font-size: 1.2rem; color: var(--c-slate); margin-bottom: 8px;">Thank you for your purchase, <span id="confName" style="font-weight: 600; color: var(--c-midnight);"></span>.</p>
+    <p style="font-size: 1.1rem; color: var(--c-slate); margin-bottom: 32px;">Your order <strong id="confOrderNo" style="color: var(--c-midnight);"></strong> has been placed successfully.</p>
+    <div style="background: var(--c-white); padding: 24px; border: 1px solid var(--c-sand); margin-bottom: 32px; display: inline-block; text-align: left; box-shadow: var(--shadow-sm);">
+      <div style="margin-bottom: 12px;"><strong>Total Paid:</strong> <span id="confTotal"></span></div>
+      <div style="margin-bottom: 12px;"><strong>Payment Method:</strong> <span id="confMethod" style="text-transform: capitalize;"></span></div>
+      <div><strong>Estimated Delivery:</strong> 3-5 Business Days</div>
+    </div>
+    <p style="font-size: 0.9rem; color: var(--c-slate); margin-bottom: 32px;">Your order details have been saved locally for this browser session.</p>
+    <div>
+      <a href="index.html" class="btn btn-primary">Return to Home</a>
+    </div>
+  </div>
+  <footer class="footer" style="margin-top: 0;">
+    <div class="container text-center">
+      <div style="color: #A3A3A3; font-size: 0.85rem;">&copy; 2026 ChoiceShoppingStore.online. Secure Checkout.</div>
+    </div>
+  </footer>
+  <script src="products.js"></script>
+  <script src="storage.js"></script>
+  <script src="checkout.js"></script>
+</body>
+</html>

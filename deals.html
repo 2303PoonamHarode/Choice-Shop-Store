@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deals | ChoiceShoppingStore.online</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container navbar d-flex justify-between align-center">
+      <a href="index.html" class="nav-logo">ChoiceShoppingStore</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="categories.html">Categories</a>
+        <a href="new-arrivals.html">New Arrivals</a>
+        <a href="deals.html" class="active">Deals</a>
+      </nav>
+      <div class="nav-icons">
+        <button class="nav-icon trigger-search"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+        <a href="cart.html?tab=wishlist" class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="badge wishlist-count" style="display:none">0</span></a>
+        <a href="cart.html" class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="badge cart-count" style="display:none">0</span></a>
+        <button class="hamburger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+      </div>
+    </div>
+  </header>
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-header"><button id="closeSearch"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="search-body container">
+      <form class="search-form" id="globalSearchForm">
+        <input type="text" class="search-input" id="globalSearchInput" placeholder="Search for products..." autocomplete="off">
+        <button type="submit" class="search-submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+      </form>
+    </div>
+  </div>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    <nav class="mobile-nav-links">
+      <a href="index.html">Home</a><a href="shop.html">Shop All</a><a href="categories.html">Categories</a><a href="new-arrivals.html">New Arrivals</a><a href="deals.html">Deals</a>
+    </nav>
+  </div>
+  <main>
+    <section class="page-header" style="background-color: var(--c-terracotta); color: var(--c-white); border: none;">
+      <div class="container">
+        <h1 class="page-title">Good Pieces. Better Prices.</h1>
+        <p class="page-desc" style="color: rgba(255,255,255,0.8);">Shop our curated selection of premium markdowns and limited-time offers.</p>
+      </div>
+    </section>
+    <section class="section container">
+      <div id="dealOfTheDay" style="background-color: var(--c-white); padding: 40px; border: 1px solid var(--c-sand); display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
+      </div>
+    </section>
+    <section class="section" style="background-color: var(--c-ivory); border-top: 1px solid var(--c-sand); border-bottom: 1px solid var(--c-sand);">
+      <div class="container">
+        <h2 class="page-title text-center">Up to 30% Off</h2>
+        <div class="grid-4" id="thirtyOffGrid">
+        </div>
+      </div>
+    </section>
+    <section class="section container">
+      <div style="background-image: url('https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1200&auto=format&fit=crop'); background-size: cover; background-position: center; padding: 100px 40px; text-align: center; color: var(--c-white);">
+        <div style="max-width: 500px; margin: 0 auto; background: rgba(23,23,23,0.85); padding: 40px;">
+          <h2 style="font-size: 48px; font-family: var(--font-display); font-weight: 400; margin-bottom: 24px; line-height: 1;">End of Season Archive</h2>
+          <p style="margin-bottom: 32px; font-size: 14px; line-height: 1.6; color: var(--c-ivory);">Extra 15% off applied at checkout on all sale items. Use code <strong>ARCHIVE15</strong>.</p>
+          <a href="shop.html" class="btn btn-primary">Shop The Archive</a>
+        </div>
+      </div>
+    </section>
+    <section class="section container">
+      <h2 class="page-title text-center">Trending Deals</h2>
+      <div class="grid-4" id="trendingDealsGrid">
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">ChoiceShoppingStore.online</div>
+          <p class="footer-desc">Curating premium fashion and lifestyle essentials for the modern wardrobe.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <div class="footer-links">
+            <a href="shop.html">Shop All</a>
+            <a href="categories.html">Categories</a>
+          </div>
+        </div>
+        <div>
+          <h4>Customer Care</h4>
+          <div class="footer-links">
+            <a href="#">Shipping & Delivery</a>
+            <a href="#">Returns Policy</a>
+          </div>
+        </div>
+        <div>
+          <h4>Secure Shopping</h4>
+          <p style="color: #A3A3A3; font-size: 0.8rem;">We ensure 100% secure payments with SSL encryption.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 ChoiceShoppingStore.online. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+  <script src="products.js"></script>
+  <script src="storage.js"></script>
+  <script src="deals.js"></script>
+</body>
+</html>

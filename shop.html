@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | ChoiceShoppingStore.online</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Shop specific styles */
+    .shop-layout {
+      display: flex;
+      gap: var(--spacing-2xl);
+      align-items: flex-start;
+    }
+    .shop-sidebar {
+      width: 250px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 100px;
+    }
+    .shop-content {
+      flex: 1;
+    }
+    .filter-group {
+      margin-bottom: var(--spacing-xl);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 1px solid var(--c-sand);
+    }
+    .filter-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      margin-bottom: var(--spacing-md);
+      font-family: var(--font-body);
+      color: var(--c-slate);
+    }
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .filter-option input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--c-terracotta);
+    }
+    .shop-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-xl);
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+    }
+    .sort-select {
+      padding: 8px 12px;
+      border: 1px solid var(--c-sand);
+      font-family: var(--font-body);
+      background-color: transparent;
+      color: var(--c-midnight);
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: var(--spacing-3xl);
+    }
+    .page-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--c-sand);
+      background: transparent;
+    }
+    .page-btn.active {
+      background-color: var(--c-midnight);
+      color: var(--c-white);
+      border-color: var(--c-midnight);
+    }
+    .mobile-filter-btn {
+      display: none;
+    }
+    @media (max-width: 900px) {
+      .shop-layout { flex-direction: column; }
+      .shop-sidebar { 
+        display: none; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--c-white);
+        z-index: 2000;
+        padding: var(--spacing-2xl) var(--spacing-lg);
+        overflow-y: auto;
+      }
+      .shop-sidebar.open { display: block; }
+      .mobile-filter-btn { display: inline-flex; width: 100%; justify-content: center; margin-left: 0 !important; margin-top: 12px; }
+      .sidebar-close { display: block !important; position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; padding: 0; }
+      #applyFiltersBtnMobile { display: flex !important; }
+      .shop-controls {
+        position: sticky;
+        top: 60px;
+        background: var(--c-ivory);
+        z-index: 90;
+        padding: 12px 0;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--c-sand);
+      }
+      .shop-controls > div:first-child {
+        display: flex; flex-direction: column; width: 100%;
+      }
+      .shop-controls .d-flex {
+        width: 100%; justify-content: space-between; margin-top: 12px;
+      }
+      .sort-select { flex: 1; margin-left: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container navbar d-flex justify-between align-center">
+      <a href="index.html" class="nav-logo">ChoiceShoppingStore</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html" class="active">Shop</a>
+        <a href="categories.html">Categories</a>
+        <a href="new-arrivals.html">New Arrivals</a>
+        <a href="deals.html">Deals</a>
+      </nav>
+      <div class="nav-icons">
+        <button class="nav-icon trigger-search"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+        <a href="cart.html?tab=wishlist" class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="badge wishlist-count" style="display:none">0</span></a>
+        <a href="cart.html" class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="badge cart-count" style="display:none">0</span></a>
+        <button class="hamburger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <nav class="mobile-nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop All</a>
+      <a href="categories.html">Categories</a>
+      <a href="new-arrivals.html">New Arrivals</a>
+      <a href="deals.html">Deals</a>
+      <a href="shop.html?search=Bestseller">Bestsellers</a>
+      <a href="cart.html?tab=wishlist">Wishlist</a>
+      <a href="cart.html">Cart</a>
+      <div style="margin-top: 16px; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--c-slate); font-weight: 600;">Shop By Category</div>
+      <a href="shop.html?category=Clothing" style="font-size: 16px; border-bottom: none; padding-bottom: 0;">Clothing</a>
+      <a href="shop.html?category=Footwear" style="font-size: 16px; border-bottom: none; padding-bottom: 0;">Footwear</a>
+      <a href="shop.html?category=Bags" style="font-size: 16px; border-bottom: none; padding-bottom: 0;">Bags</a>
+      <a href="shop.html?category=Accessories" style="font-size: 16px; border-bottom: none; padding-bottom: 0;">Accessories</a>
+    </nav>
+  </div>
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-header">
+      <button id="closeSearch" aria-label="Close Search">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="search-body container">
+      <form class="search-form" id="globalSearchForm">
+        <input type="text" class="search-input" id="globalSearchInput" placeholder="Search for products..." autocomplete="off">
+        <button type="submit" class="search-submit" aria-label="Submit Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb justify-center">
+        <a href="index.html">Home</a> <span>/</span> <span>Shop</span>
+      </div>
+      <h1 class="page-title" id="shopTitle">All Products</h1>
+      <p class="page-desc">Explore our complete collection of premium fashion and accessories.</p>
+    </div>
+  </div>
+  <main class="section container">
+    <div class="shop-layout">
+      <aside class="shop-sidebar" id="filterSidebar">
+        <button class="btn sidebar-close" id="closeSidebar" style="display:none;">Close Filters</button>
+        <h2 style="font-size: 24px; font-family: var(--font-display); font-weight: 400; margin-bottom: 24px;">Filters</h2>
+        <div class="filter-group">
+          <h3 class="filter-title">Category</h3>
+          <div id="categoryFilters">
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-title">Price Range</h3>
+          <label class="filter-option"><input type="radio" name="price" value="all" checked> All Prices</label>
+          <label class="filter-option"><input type="radio" name="price" value="0-2000"> Under ₹2,000</label>
+          <label class="filter-option"><input type="radio" name="price" value="2000-5000"> ₹2,000 - ₹5,000</label>
+          <label class="filter-option"><input type="radio" name="price" value="5000+"> Over ₹5,000</label>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-title">Rating</h3>
+          <label class="filter-option"><input type="radio" name="rating" value="all" checked> All Ratings</label>
+          <label class="filter-option"><input type="radio" name="rating" value="4"> 4 Stars & Up</label>
+          <label class="filter-option"><input type="radio" name="rating" value="3"> 3 Stars & Up</label>
+        </div>
+        <div style="margin-top: 32px; display: flex; gap: 12px; flex-direction: column;">
+          <button class="btn btn-primary btn-full" id="applyFiltersBtnMobile" style="display: none;">Apply Filters</button>
+          <button class="btn btn-outline btn-full" id="clearFiltersSidebarBtn">Clear All</button>
+        </div>
+      </aside>
+      <div class="shop-content">
+        <div class="shop-controls">
+          <div>
+            <span id="resultCount" style="color: var(--c-slate);">Loading...</span>
+            <button class="btn btn-outline mobile-filter-btn" id="openSidebar" style="margin-left: 16px; padding: 6px 12px;">Filters & Sort</button>
+          </div>
+          <div class="d-flex align-center gap-sm">
+            <span>Sort by:</span>
+            <select class="sort-select" id="sortSelect">
+              <option value="recommended">Recommended</option>
+              <option value="newest">Newest</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Highest Rated</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-3" id="shopGrid">
+        </div>
+        <div class="pagination" id="pagination">
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">ChoiceShoppingStore.online</div>
+          <p class="footer-desc">Curating premium fashion and lifestyle essentials for the modern wardrobe.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <div class="footer-links">
+            <a href="shop.html">Shop All</a>
+            <a href="categories.html">Categories</a>
+          </div>
+        </div>
+        <div>
+          <h4>Customer Care</h4>
+          <div class="footer-links">
+            <a href="#">Shipping & Delivery</a>
+            <a href="#">Returns Policy</a>
+          </div>
+        </div>
+        <div>
+          <h4>Secure Shopping</h4>
+          <p style="color: #A3A3A3; font-size: 0.8rem;">We ensure 100% secure payments with SSL encryption.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 ChoiceShoppingStore.online. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+  <script src="products.js"></script>
+  <script src="storage.js"></script>
+  <script src="shop.js"></script>
+</body>
+</html>
